@@ -1,4 +1,10 @@
 console.log(1)
+function removeActiveClass (){
+  const activeButton = document.getElementsByClassName('active')
+  for(let btn of activeButton){
+    btn.classList.remove('active')
+  }
+}
 
 
 function loadCategories() {
@@ -16,7 +22,11 @@ function loadCategories() {
 function loadVideos() {
     fetch('https://openapi.programming-hero.com/api/phero-tube/videos')
         .then(response => response.json())
-        .then(data => displayVideos(data.videos))
+        .then(data => {
+          removeActiveClass()
+          document.getElementById('btn-all').classList.add('active')
+          displayVideos(data.videos)
+        })
 }
 
 const loadCategoryVideos =(id) => {
@@ -26,7 +36,14 @@ const loadCategoryVideos =(id) => {
 
     fetch(url)
     .then(res => res.json())
-    .then(data=> displayVideos(data.category))
+    .then(data=> {
+      removeActiveClass();
+
+      const clickedButton = document.getElementById(`btn-${id}`); 
+      clickedButton.classList.add('active');
+     
+      displayVideos(data.category);
+    })
 }
 // {category_id: '1001', category: 'Music'}
 // for of diye 
@@ -42,11 +59,10 @@ function displayCategories(categories) {
         // create Element
         const categoryDiv = document.createElement('div');
         categoryDiv.innerHTML = `
-        <button onclick="loadCategoryVideos(${cat.category_id})" class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white ">${cat.category}</button>
+        <button id="btn-${cat.category_id}" onclick="loadCategoryVideos(${cat.category_id})" class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white ">${cat.category}</button>
         `;
         // append the Element
         btnContainer.append(categoryDiv)
-
     }
 
 }
@@ -74,7 +90,16 @@ function displayCategories(categories) {
 const displayVideos = (videos) => {
     const videoContainer = document.getElementById('video-container');
     videoContainer.innerHTML= "";
-
+    if(videos.length == 0){
+      
+      videoContainer.innerHTML =`
+      <div class=" col-span-full flex flex-col justify-center items-center text-center m-12">
+            <img src="./assets/Icon.png" alt="">
+            <h2 class="text-2xl font-bold mt-4">Oops!! Sorry, There is no content here</h2>
+        </div>
+      `;
+      return;
+    }
     videos.forEach((video) => {
         console.log(video)
 
