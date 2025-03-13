@@ -13,14 +13,21 @@ function loadCategories() {
         .then(data => displayCategories(data.categories))
 }
 
-
-
 function loadVideos() {
     fetch('https://openapi.programming-hero.com/api/phero-tube/videos')
         .then(response => response.json())
         .then(data => displayVideos(data.videos))
 }
 
+const loadCategoryVideos =(id) => {
+    
+    const url = `https://openapi.programming-hero.com/api/phero-tube/category/${id}`;
+    console.log(url);
+
+    fetch(url)
+    .then(res => res.json())
+    .then(data=> displayVideos(data.category))
+}
 // {category_id: '1001', category: 'Music'}
 // for of diye 
 function displayCategories(categories) {
@@ -35,7 +42,7 @@ function displayCategories(categories) {
         // create Element
         const categoryDiv = document.createElement('div');
         categoryDiv.innerHTML = `
-        <button class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white ">${cat.category}</button>
+        <button onclick="loadCategoryVideos(${cat.category_id})" class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white ">${cat.category}</button>
         `;
         // append the Element
         btnContainer.append(categoryDiv)
@@ -43,8 +50,6 @@ function displayCategories(categories) {
     }
 
 }
-
-
 // {
 //     "category_id": "1003",
 //     "video_id": "aaai",
@@ -68,6 +73,7 @@ function displayCategories(categories) {
 // for each diye 
 const displayVideos = (videos) => {
     const videoContainer = document.getElementById('video-container');
+    videoContainer.innerHTML= "";
 
     videos.forEach((video) => {
         console.log(video)
@@ -101,9 +107,5 @@ const displayVideos = (videos) => {
         // append
         videoContainer.append(videoCard)
     })
-
-
-
 }
 loadCategories()
-loadVideos()
