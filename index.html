@@ -1,55 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PH Tube</title>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-        .active{
-            background-color: #FF1F3D;
-            color: white;
-        }
+      .active {
+        background-color: #ff1f3d;
+        color: white;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <nav class="container mx-auto flex justify-between border-b-2 py-5 border-[#17171720]">
-            <div>
-                <img class="w-[125px]" src="./assets/Logo.png" alt="">
-            </div>
+      <nav
+        class="container mx-auto flex justify-between border-b-2 py-5 border-[#17171720]"
+      >
+        <div>
+          <img class="w-[125px]" src="./assets/Logo.png" alt="" />
+        </div>
 
-            <div class="sort">
-                <button class="btn">Sort by view</button>
-            </div>
-            
-            <div class="blogs">
-                <button class="btn bg-[#FF1F3D] text-white">Blog</button>
-            </div>
-        </nav>
+        <div class="sort">
+          <label class="input">
+            <svg
+              class="h-[1em] opacity-50"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
+              <g
+                stroke-linejoin="round"
+                stroke-linecap="round"
+                stroke-width="2.5"
+                fill="none"
+                stroke="currentColor"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.3-4.3"></path>
+              </g>
+            </svg>
+            <input
+              id="search-input"
+              type="search"
+              required
+              placeholder="Search"
+            />
+          </label>
+        </div>
+
+        <div class="blogs">
+          <button class="btn bg-[#FF1F3D] text-white">sort by view</button>
+        </div>
+      </nav>
     </header>
 
     <nav id="btn-container" class="flex p-5 justify-center gap-5">
-        <div>
-            <button id="btn-all" onclick="loadVideos() " class="btn btn-sm ">All</button>
-        </div>
-        
+      <div>
+        <button id="btn-all" onclick="loadVideos() " class="btn btn-sm">
+          All
+        </button>
+      </div>
     </nav>
 
-    <section id="video-container" class="container mx-auto grid grid-cols-4 gap-5">
 
-        <div class=" col-span-full flex flex-col justify-center items-center text-center m-12">
-            <img src="./assets/Icon.png" alt="">
-            <h2 class="text-2xl font-bold mt-4">Oops!! Sorry, There is no content here</h2>
-        </div>
 
+    <section id="loader" class="flex justify-center items-center py-6 hidden">
+
+      <span class="loading loading-dots loading-xl"></span>
 
     </section>
 
 
 
 
+    <section
+      id="video-container"
+      class="container mx-auto grid grid-cols-4 gap-5"
+    >
+      <div
+        class="col-span-full flex flex-col justify-center items-center text-center m-12"
+      >
+        <img src="./assets/Icon.png" alt="" />
+        <h2 class="text-2xl font-bold mt-4">
+          Oops!! Sorry, There is no content here
+        </h2>
+      </div>
+    </section>
+
+    <!-- Open the modal using ID.showModal() method -->
+    <!-- <button class="btn" onclick="my_modal_1.showModal()">open modal</button> -->
+    <dialog id="video_details" class="modal">
+      <div class="modal-box">
+        <div id="details-container"></div>
+
+        <div class="modal-action">
+          <form method="dialog">
+            <!-- if there is a button in form, it will close the modal -->
+            <button class="btn">Close</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+
     <script src="script/index.js"></script>
-</body>
+  </body>
 </html>
